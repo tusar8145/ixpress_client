@@ -1,0 +1,11 @@
+3-5 years experience in front-end relevant field
+Exceptional expertise and skills with ReactJS
+Experience with Angular/VueJS will be plus
+Proficient with TypeScript will be plus
+A proven track record shipping production products at scale
+Ability to work independently and take ownership of problems and system components
+Experience with Expo and/or Next.js/Express.js is a plus
+Experience with AWS and continuous delivery practices is a plus
+Experience using state management libraries
+Excellent understanding of clean markup and CSS, how to use it, and where
+Experience writing unit tests

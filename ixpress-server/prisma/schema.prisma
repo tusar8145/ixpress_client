@@ -1,0 +1,1271 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+ 
+ 
+
+ 
+ model pickup_tracking {  
+  id    Int   @id @default(autoincrement())
+  pickup_id    Int
+ pickup_id_  pickup @relation    (fields:[pickup_id], references:[id]) 
+
+  action_type String  
+  date String 
+  i_delivery_status_id_18 Int  
+
+ i_delivery_status   i_delivery_status @relation (fields:[i_delivery_status_id_18], references:[i_delivery_status_id]) 
+
+  i_tracking_status_id_19 Int   
+
+ i_tracking_status   i_tracking_status @relation (fields:[i_tracking_status_id_19], references:[i_tracking_status_id]) 
+
+  destination Int
+  branch_destination   branch @relation ("branch_destination", fields:[destination], references:[branch_id]) 
+  pickup_reference_id String?  
+
+  creator Int 
+  creator_   tbl_users @relation (fields:[creator], references:[userID]) 
+
+  created String?
+  source Int
+  branch_source   branch @relation ("branch_source", fields:[source], references:[branch_id]) 
+
+
+
+
+
+   delivery_boy_id Int?
+   delivery_boy_id_   tbl_users?  @relation ("delivery_boy_user_", fields:[delivery_boy_id], references:[userID]) 
+
+   i_relation_id Int?  
+   i_relation   i_relation? @relation (fields:[i_relation_id], references:[i_relation_id]) 
+   i_relation_person String?  
+
+   i_return_cause_id Int? 
+   i_return_cause   i_return_cause? @relation (fields:[i_return_cause_id], references:[i_return_cause_id]) 
+
+ 
+
+  time String?
+  note String?
+ }
+
+
+ model wallet_transaction {
+  id    Int   @id @default(autoincrement())
+  transaction_id String? @unique
+  amount Int
+  key String?
+  method String? 
+  account  String?
+  client_id Int?
+  client_id_   services_clients? @relation ("client_id_", fields:[client_id], references:[services_clients_id]) 
+
+  marchant_id Int
+  marchant_id_   services_clients_branch @relation ("marchant_id_", fields:[marchant_id], references:[services_clients_branch_id]) 
+  request_date String?
+  created String?
+  creator Int
+  creator_   tbl_users @relation ("creator_wallet_", fields:[creator], references:[userID]) 
+
+  approved_by Int?
+  approved_by2_   tbl_users? @relation ("approved_by2", fields:[approved_by], references:[userID]) 
+  approved_date String?
+
+
+  is_disbursed Int? @default(0)
+  disbursed_trx String?
+  invoices   String?
+  branch Int?
+  current_branch   branch? @relation (fields:[branch], references:[branch_id]) 
+
+  charge_trxid_ pickup[] @relation("charge_trxid_") 
+  collection_trxid_ pickup[] @relation("collection_trxid_") 
+
+ }
+
+
+ model pickup_reference {
+  id    Int   @id @default(autoincrement())
+  pickup_reference String
+  creator String?
+  created String?
+  branch_id Int  
+ }
+
+ model 	tbl_users_token {
+  id    Int   @id @default(autoincrement())
+  token String
+  creator Int
+ }
+
+
+ model pickup {
+      id    Int   @id @default(autoincrement())
+
+    services_id_1    Int
+    services services @relation (fields:[services_id_1], references:[services_id]) 
+
+    i_product_type_id_2    Int
+    i_product_type i_product_type @relation (fields:[i_product_type_id_2], references:[i_product_type_id]) 
+
+    i_priority_id_3    Int
+    i_priority i_priority @relation (fields:[i_priority_id_3], references:[i_priority_id]) 
+
+    product_info_4    String?
+    overwriting_cost_5    String?
+    total_cost_6    String?
+    collection_amount_7    String?
+    i_payment_type_8    Int
+    i_payment_type   i_payment_type @relation (fields:[i_payment_type_8], references:[i_payment_type_id]) 
+
+	       sender_category_1    String
+          pickup_type_2    String
+          pickup_date_3    String
+          sender_ref_no_4    String
+          sender_phone_5    String?
+          sender_name_6    String?
+          sender_client_id_7    Int?
+          sender_client_branch_id_8    Int?
+          sender_address_9    String?
+          sender_country_id_10    Int?
+          sender_division_id_11    Int?
+          sender_district_id_12    Int?
+          sender_upazila_id_13    Int?
+          recipient_category_14    String 
+          delivery_type_15    String
+          i_packaging_type_id_16    Int
+          i_packaging_type   i_packaging_type @relation (fields:[i_packaging_type_id_16], references:[i_packaging_type_id]) 
+          i_shipment_method_id_17    Int
+          i_shipment_method   i_shipment_method @relation (fields:[i_shipment_method_id_17], references:[i_shipment_method_id]) 
+          i_delivery_status_id_18    Int
+          i_delivery_status   i_delivery_status @relation (fields:[i_delivery_status_id_18], references:[i_delivery_status_id]) 
+          i_tracking_status_id_19    Int
+          i_tracking_status   i_tracking_status @relation (fields:[i_tracking_status_id_19], references:[i_tracking_status_id]) 
+          recipient_phone_20    String?
+          recipient_name_21    String?
+          recipient_client_id_22    Int? 
+          recipient_client_branch_id_23    Int?
+          recipient_address_24    String?
+          recipient_country_id_25    Int?
+          recipient_division_id_26    Int?
+          recipient_district_id_27    Int?
+          recipient_upazila_id_28   Int?
+          recipient_branch_id_29   Int?
+          i_sms_template_id_30	 String?
+          is_track_by_rec Int?
+
+
+charge_trxid  String?
+collection_trxid  String?
+
+charge_trxid_   wallet_transaction? @relation ("charge_trxid_",fields:[charge_trxid], references:[transaction_id]) 
+collection_trxid_   wallet_transaction? @relation ("collection_trxid_",fields:[collection_trxid], references:[transaction_id]) 
+
+
+//excel cost
+delivery_cost_amount   Int?  @default(0)
+collection_amount   Int?  @default(0)
+cod_cost_percent   Int?  @default(0)
+cod_cost_amount   Int?  @default(0)
+return_cost_amount   Int?  @default(0)
+
+amount_to_wallet Int? 
+amount_from_wallet Int? 
+ 
+trx_ids  String?
+
+   delivery_boy_id Int?
+   delivery_boy_id_   tbl_users?  @relation ("delivery_boy_user_", fields:[delivery_boy_id], references:[userID]) 
+   delivery_boy_area String?
+   delivery_boy_date String?
+ 
+
+delivery_date String?
+
+   i_relation_id Int?  
+   i_relation   i_relation? @relation (fields:[i_relation_id], references:[i_relation_id]) 
+   i_relation_person String?  
+
+   i_return_cause_id Int? 
+   i_return_cause   i_return_cause? @relation (fields:[i_return_cause_id], references:[i_return_cause_id]) 
+
+
+
+//others 
+unique_upload_id	 String?
+  customer_no 	Int?
+  current_branch_id 	Int
+ current_branch   branch @relation (fields:[current_branch_id], references:[branch_id]) 
+otp Int?
+otp_verified Int?
+
+  created_branch_id Int
+  created_branch_   branch @relation ("created_branch_", fields:[created_branch_id], references:[branch_id]) 
+
+ 
+  last_branch_id Int?
+  created             String?                   @db.VarChar(40)
+  modified            String?                   @db.VarChar(40)
+  creator             Int
+  creator1_   tbl_users @relation ("creator_user_", fields:[creator], references:[userID]) 
+
+  modifier            Int?
+   // @@unique([sender_ref_no_4], name: "sender_ref_no_4_")
+  pickup_id_ pickup_tracking[] 
+    
+  created_at             DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at             DateTime?  @default(now()) @db.Timestamp(0)
+ }
+
+
+ 
+model shipment {
+  id    Int   @id @default(autoincrement())
+//goods_group
+  services_id         Int?
+  i_document_type_id  Int?
+  i_priority_id  Int?
+  
+  goods_info String?
+  qty		Int?
+  remarkes		String?
+  weight		Int?
+  dimension		String?
+	  
+  i_unit_id  Int?
+  
+//cost_group  
+  total_cost	Int?
+  overwriting_cost	Int?
+  i_payment_type_id  Int?
+
+//recipient_group
+  i_relation_id  Int?
+  re_ref_no	String?
+  re_name	String?
+  re_company	String?
+  re_address	String?
+  re_city	String?
+  re_post_code	String?
+  re_country	String?
+  re_cell_no	String?
+  re_customer_no String?
+  re_tracking_code String?  
+  is_track_web 	String?
+  
+  recived_by	String? 
+	
+//sender_group 
+  services_clients_id    Int?
+  
+//shipment_group
+ zone_id  Int?
+i_packaging_type_id  Int?
+i_return_cause_id  Int?
+i_shipment_method_id  Int?
+i_sms_template_id  String?
+i_tracking_status_id  Int?
+i_delivery_status_id  Int?
+i_tracking_status_history String? @db.MediumText()
+i_delivery_status_history String? @db.MediumText()
+ 
+
+//datetime_group
+  pickup_date         String?
+  
+//others
+  branch_id  Int? 
+  current_branch 	Int?
+  created             String?                   @db.VarChar(40)
+  modified            String?                   @db.VarChar(40)
+  creator             Int?
+  modifier            Int?
+}
+ 
+ 
+
+ 
+
+
+model zone {
+  zone_id Int     @id @default(autoincrement())
+  zone    String? @db.VarChar(255)
+  position  Int?
+  is_active Int?    @default(1)
+  created   String? @db.VarChar(40)
+  modified  String? @db.VarChar(40)
+  creator   Int?
+  modifier  Int?
+}
+
+model i_priority {
+  i_priority_id Int     @id @default(autoincrement())
+  i_priority    String? @db.VarChar(255)
+  position  Int?
+  is_active Int?    @default(1)
+  created   String? @db.VarChar(40)
+  modified  String? @db.VarChar(40)
+  creator   Int?
+  modifier  Int?
+  pickup pickup[]
+}
+
+model i_payment_type {
+  i_payment_type_id Int     @id @default(autoincrement())
+  i_payment_type    String? @db.VarChar(255)
+  position  Int?
+  is_active Int?    @default(1)
+  have_collection Int?    @default(1)
+  created   String? @db.VarChar(40)
+  modified  String? @db.VarChar(40)
+  creator   Int?
+  modifier  Int?
+  pickup pickup[]
+}
+
+model activitylog {
+  id       Int     @id @default(autoincrement())
+  types    String? @db.VarChar(100)
+  device   String? @db.VarChar(500)
+  ip       String? @db.VarChar(500)
+  location String? @db.VarChar(500)
+  browser  String? @db.VarChar(500)
+  log      String? @db.VarChar(250)
+  log2      String? @db.VarChar(250)
+  userID   Int?
+}
+
+model email_addresses {
+  email_addresses_id Int     @id @default(autoincrement())
+  email_addresses    String? @db.VarChar(250)
+  password           String? @db.VarChar(250)
+  is_key             String? @default("1") @db.VarChar(250)
+  created_by         String? @db.VarChar(250)
+  approved_by        String? @db.VarChar(250)
+  created            String? @db.VarChar(250)
+  modified           String? @db.VarChar(500)
+  creator            String? @db.VarChar(250)
+  modifier           String? @db.VarChar(100)
+  setFrom            String? @db.VarChar(250)
+  replyTo            String? @db.VarChar(500)
+  title              String? @db.VarChar(500)
+}
+
+model email_outbox {
+  email_outbox_id        Int     @id @default(autoincrement())
+  email_outbox           String  @db.VarChar(250)
+  email_outbox_types     String? @db.VarChar(250)
+  position               String? @db.VarChar(250)
+  email_from             String? @db.VarChar(250)
+  email_to               String? @db.VarChar(250)
+  published_on           String? @db.VarChar(250)
+  closed_on              String? @db.VarChar(250)
+  details                String? @db.LongText
+  files                  String? @db.LongText
+  is_key                 String? @default("1") @db.VarChar(250)
+  is_editable            Int?    @default(1)
+  email_documents_status String? @db.VarChar(250)
+  created                String? @db.VarChar(250)
+  modified               String? @db.VarChar(500)
+  modifier               String? @db.VarChar(100)
+  creator                String? @db.VarChar(250)
+  accessable             String? @db.VarChar(250)
+  email_addresses_id     Int?
+}
+
+model zone_countries {
+  zone_countries_id Int     @id @default(autoincrement())
+  A2             String? @db.VarChar(100)
+  A3             String? @db.VarChar(100)
+  NUM            String? @db.VarChar(100)
+  zone_countries    String? @db.VarChar(111)
+  position       Int?
+  is_active      Int?    @default(1)
+  created        String? @db.VarChar(40)
+  modified       String? @db.VarChar(40)
+  creator        Int?
+  modifier       Int?
+}
+ 
+
+
+
+model i_document_type {
+  i_document_type_id Int                       @id @default(autoincrement())
+  i_document_type    String?                   @db.VarChar(255)
+  sms_send           i_document_type_sms_send? @default(No)
+  is_sms_send        Int                       @default(0)
+  is_active          Int?                      @default(1)
+  created            String?                   @db.VarChar(40)
+  modified           String?                   @db.VarChar(40)
+  creator            Int?
+  modifier           Int?
+}
+
+
+
+model i_product_type { 
+  i_product_type_id Int                       @id @default(autoincrement())
+  i_product_type    String?                   @db.VarChar(255)
+  services_id          String?                   @db.VarChar(40)
+  is_active          Int?                      @default(1)
+  created            String?                   @db.VarChar(40)
+  modified           String?                   @db.VarChar(40)
+  creator            Int?
+  modifier           Int?
+  pickup pickup[]
+}
+
+
+
+model i_gateway {
+  i_gateway_id Int               @id @default(autoincrement())
+  i_gateway    String?           @db.VarChar(150)
+  trackurl     String?           @db.VarChar(255)
+  status       i_gateway_status? @default(Yes)
+  position     Int?
+  is_active    Int?              @default(1)
+  created      String?           @db.VarChar(40)
+  modified     String?           @db.VarChar(40)
+  creator      Int?
+  modifier     Int?
+}
+
+model i_oc_country {
+  i_oc_country_id   Int      @id @default(autoincrement())
+  i_oc_country      String   @db.VarChar(128)
+  iso_code_2        String?  @db.VarChar(2)
+  iso_code_3        String?  @db.VarChar(3)
+  address_format    String?  @db.Text
+  postcode_required Boolean?
+  status            Boolean  @default(true)
+  zone              String?  @db.VarChar(2)
+  tnt_zone          String?  @db.VarChar(2)
+  tnt_surcharge     Int?     @default(1)
+  position          Int?
+  is_active         Int?     @default(1)
+  created           String?  @db.VarChar(40)
+  modified          String?  @db.VarChar(40)
+  creator           Int?
+  modifier          Int?
+}
+
+model i_relation {
+  i_relation_id Int     @id @default(autoincrement())
+  i_relation    String? @db.VarChar(150)
+  short_name    String? @db.VarChar(100)
+  position      Int?
+  is_active     Int?    @default(1)
+  created       String? @db.VarChar(40)
+  modified      String? @db.VarChar(40)
+  creator       Int?
+  modifier      Int?
+ pickup pickup[]
+ pickup_tracking  pickup_tracking[]  
+}
+
+model i_return_cause {
+  i_return_cause_id Int     @id @default(autoincrement())
+  i_return_cause    String? @db.VarChar(255)
+  position          Int?
+  is_active         Int?    @default(1)
+  created           String? @db.VarChar(40)
+  modified          String? @db.VarChar(40)
+  creator           Int?
+  modifier          Int?
+  pickup pickup[]
+   pickup_tracking  pickup_tracking[]  
+}
+
+model i_sms_template {
+  i_sms_template_id Int                       @id @default(autoincrement())
+  i_sms_template    String?                   @db.VarChar(255)
+  have_general_sender   Int?                  @default(1)
+  message           String?                   @db.Text
+  step              String?                   @db.VarChar(100)
+  published         i_sms_template_published? @default(Yes)
+  position          Int?
+  is_active         Int?                      @default(1)
+  created           String?                   @db.VarChar(40)
+  modified          String?                   @db.VarChar(40)
+  creator           Int?
+  modifier          Int?
+}
+
+model i_tracking_status {
+  i_tracking_status_id Int     @id @default(autoincrement())
+  i_tracking_status    String? @db.VarChar(255)
+  position             Int?
+  is_active            Int?    @default(1)
+  created              String? @db.VarChar(40)
+  modified             String? @db.VarChar(40)
+  creator              Int?
+  modifier             Int?
+
+  i_delivery_status_id String?
+
+  pickup pickup[]
+  pickup_tracking pickup_tracking[]
+}
+
+model i_delivery_status {
+  i_delivery_status_id Int     @id @default(autoincrement())
+  i_delivery_status    String? @db.VarChar(255)
+  position             Int?
+  is_active            Int?    @default(1)
+  created              String? @db.VarChar(40)
+  modified             String? @db.VarChar(40)
+  creator              Int?
+  modifier             Int?
+  pickup pickup[]
+  pickup_tracking pickup_tracking[]
+}
+
+model i_unit {
+  i_unit_id Int     @id @default(autoincrement())
+  i_unit    String? @db.VarChar(255)
+  position  Int?
+  is_active Int?    @default(1)
+  created   String? @db.VarChar(40)
+  modified  String? @db.VarChar(40)
+  creator   Int?
+  modifier  Int?
+}
+
+model i_packaging_type {
+  i_packaging_type_id Int     @id @default(autoincrement())
+  i_packaging_type    String? @db.VarChar(255)
+  services_id  String?
+  weight  Float?
+  position  Int?
+  is_active Int?    @default(1)
+  created   String? @db.VarChar(40)
+  modified  String? @db.VarChar(40)
+  creator   Int?
+  modifier  Int?
+  pickup pickup[]
+}
+
+model i_shipment_method {
+  i_shipment_method_id Int     @id @default(autoincrement())
+  i_shipment_method    String? @db.VarChar(255) 
+  position  Int?
+  is_active Int?    @default(1)
+  created   String? @db.VarChar(40)
+  modified  String? @db.VarChar(40)
+  creator   Int?
+  modifier  Int?
+  pickup pickup[]
+}
+ 
+  
+
+model branch {    
+  branch_id  Int                 @id @default(autoincrement())
+  branch     String?             @db.VarChar(200)
+  branch_group_id  Int? 
+  logo         String?             @db.VarChar(150)
+  branch_code  String?             @db.VarChar(20)
+  web          String?             @db.VarChar(150)
+ 
+
+  zone_countries_id        Int?
+  zone_districts_id        Int?                      
+  zone_divisions_id        Int?                     
+  zone_upazilas_id         Int?                     
+  address String  ?
+
+  parent_branch Int?
+
+  name String?
+  phone        String?             @db.VarChar(200)
+  fax          String?             @db.VarChar(20)
+  email        String?             @db.VarChar(100)
+  officedays   String?             @db.TinyText
+  office_stime String?             @db.TinyText
+  office_etime String?             @db.TinyText
+  cl           String?            
+  sl           String?            
+  published    branch_published?
+  position     Int?
+  is_active    Int?                @default(1)
+  created      String?             @db.VarChar(40)
+  modified     String?             @db.VarChar(40)
+  creator      Int?
+  modifier     Int?
+ 
+
+  pickup_tracking1 pickup_tracking[] @relation("branch_destination")
+  pickup_tracking2 pickup_tracking[] @relation("branch_source")
+
+  branch1 pickup[] @relation("created_branch_")
+
+  parent branch?  @relation("UserCreatedBy", fields: [parent_branch], references: [branch_id])
+  parent2 branch[] @relation ("UserCreatedBy")
+  @@unique([branch_code,branch], name: "branch_code_")
+  pickup pickup[]
+  wallet_transaction wallet_transaction[]
+}                  
+
+
+
+
+model branch_group {    
+  branch_group_id  Int                 @id @default(autoincrement())
+  branch_group     String?             @db.VarChar(200)
+  branch_group_code     String?             @db.VarChar(200)
+  responsible_persion     String?  @db.VarChar(200)
+  position     Int?
+  is_active    Int?                @default(1)
+  created      String?             @db.VarChar(40)
+  modified     String?             @db.VarChar(40)
+  creator      Int?
+  modifier     Int?
+  @@unique([branch_group,branch_group_code], name: "branch_group_")
+}
+
+ 
+model pod {
+  hwb_no          BigInt            @id @default(autoincrement())
+  mbw_no          String            @db.VarChar(20)
+  ref_no          String?           @db.VarChar(45)
+  client_id       String            @db.VarChar(50)
+  sh_name         String            @db.VarChar(200)
+  sh_company      String?           @db.VarChar(200)
+  sh_dept         String?           @db.VarChar(200)
+  sh_address      String            @db.VarChar(255)
+  sh_city         String            @db.VarChar(50)
+  sh_post_code    String            @db.VarChar(20)
+  sh_country      String            @db.VarChar(50)
+  sh_cell_no      String            @db.VarChar(20)
+  re_name         String            @db.VarChar(200)
+  re_company      String?           @db.VarChar(200)
+  re_address      String            @db.VarChar(255)
+  re_city         String            @db.VarChar(50)
+  re_post_code    String            @db.VarChar(20)
+  re_country      String            @db.VarChar(50)
+  re_cell_no      String            @db.VarChar(20)
+  re_customer_no  String?           @db.VarChar(30)
+  pick_date       DateTime          @db.Date
+  tracking        String            @db.LongText
+  status          pod_status        @default(Picked_up)
+  return_cause    String?           @db.VarChar(100)
+  return_reason   String?           @db.Text
+  comments        String            @db.LongText
+  date_added      DateTime          @db.DateTime(0)
+  document_type   String?           @db.VarChar(255)
+  pod_type        pod_pod_type?     @default(General)
+  payment_type    pod_payment_type?
+  remarkes        String?           @db.VarChar(255)
+  weight          String?           @db.VarChar(50)
+  qty             Int?              @default(0)
+  dimension       String?           @db.VarChar(100)
+  rate            Float?            @default(0.00) @db.Float
+  service_charge  Float?            @default(0.00) @db.Float
+  others_charge   Float?            @default(0.00) @db.Float
+  price           Float?            @default(0.00) @db.Float
+  user_id         Int?
+  modified_date   DateTime?         @db.DateTime(0)
+  last_user       Int?
+  ip              String?           @db.VarChar(20)
+  branch_code     String?           @db.VarChar(20)
+  swiching_log    String?           @db.LongText
+  current_branch  String?           @db.VarChar(20)
+  recived_by      String?           @db.VarChar(150)
+  recived_date    DateTime?         @db.DateTime(0)
+  relation        String?           @db.VarChar(100)
+  identification  String?           @db.VarChar(200)
+  scan_file       String?           @db.VarChar(255)
+  priority        pod_priority?     @default(General)
+  sp_id           String?           @db.VarChar(30)
+  sms_send        String?           @db.VarChar(200)
+  track_status    pod_track_status  @default(No)
+  gateway         String?           @db.VarChar(50)
+  gateway_trackid String?           @db.VarChar(50)
+
+  @@index([client_id], map: "client_id")
+  @@index([mbw_no], map: "mbw_no")
+  @@index([ref_no], map: "ref_no")
+} 
+
+model services {
+  services_id Int     @id @default(autoincrement())
+  services    String? @db.VarChar(255)
+  position    Int?
+  is_active   Int?    @default(1)
+  is_track_web   Int?    @default(0)
+  is_otp   Int?    @default(0)
+  created     String? @db.VarChar(40)
+  modified    String? @db.VarChar(40)
+  creator     Int?
+  modifier    Int?
+  pickup pickup[]
+}
+
+ 
+
+model services_packages {
+  services_packages_id         Int     @id @default(autoincrement())
+  services_packages       String?
+  activate_date  String?
+  expired_date String?
+ 
+ 
+
+  is_active                    Int?    @default(1)
+  created                      String? @db.VarChar(40)
+  modified                     String? @db.VarChar(40)
+  creator                      Int?
+  modifier                     Int?
+   @@unique([services_packages], name: "services_packages_")
+}
+ 
+
+
+model services_packages_cost_config {
+  services_packages_cost_config_id         Int     @id @default(autoincrement())
+  services_packages_id         String?
+  zone_id  String?
+  i_shipment_method_id String?
+  i_priority_id String?
+  first_kg  Float?
+  fixed_cost  Float?
+  additional_kg  Float?
+  cod_cost  Float?
+  return_cost  Float?
+  services_id  String?
+ 
+
+  is_active                    Int?    @default(1)
+  created                      String? @db.VarChar(40)
+  modified                     String? @db.VarChar(40)
+  creator                      Int?
+  modifier                     Int?
+  
+ 
+}
+
+
+model services_clients {
+  services_clients_id      Int                          @id @default(autoincrement())
+  clientsid                String?                      @db.VarChar(50)
+  services_clients         String                       @default("") @db.VarChar(120)
+
+  services_provider_id     String?                      @db.VarChar(100)
+  i_sms_template_id     String?                         @db.VarChar(100)
+  i_product_type_id     String?                         @db.VarChar(450)
+  services_packages_id String?                         @db.VarChar(100)
+  discount_percent Float?  @default(0.0)
+
+  branch                   String?                      @db.VarChar(550)
+  address                  String                       @default("") @db.VarChar(255)
+  city                     String?                      @db.VarChar(50)
+  state                    String                       @default("") @db.VarChar(32)
+  post_code                String?                      @db.VarChar(32)
+  country                  String?                      @db.VarChar(100)
+  phone                    String?                      @db.VarChar(50)
+  email                    String?                      @db.VarChar(150)
+  contact_person           String?                      @db.VarChar(150)
+  cp_department            String?                      @db.VarChar(150)
+  cp_designation           String?                      @db.VarChar(150)
+  cp_phone                 String?                      @db.VarChar(100)
+  cp_email                 String?                      @db.VarChar(150)
+  published                services_clients_published   @default(Yes)
+  create_date              DateTime?                    @db.DateTime(0)
+  sms_option               services_clients_sms_option? @default(No)
+  sms_number               String?                      @db.VarChar(20)
+  api_id                   String?                      @db.VarChar(100)
+  api_enable               services_clients_api_enable?
+  api_for_web              String?                      @db.VarChar(150)
+  is_active                Int?                         @default(1)
+  created                  String?                      @db.VarChar(40)
+  modified                 String?                      @db.VarChar(40)
+  creator                  Int?
+  modifier                 Int?
+  services_category_id     String?                      @db.VarChar(450)
+  zone_districts_id        String?                      @db.VarChar(10)
+  zone_divisions_id        String?                      @db.VarChar(10)
+  zone_upazilas_id         String?                      @db.VarChar(10)
+  zone_countries_id           Int?
+  services_clients_type_id Int?
+  services_id               String?                       @default(" ") @db.VarChar(255)
+    client_id_  wallet_transaction[] @relation("client_id_") 
+    client_  services_clients_issues[] @relation("issue_client_")
+}
+
+
+model services_clients_general {
+  services_clients_general_id      Int                          @id @default(autoincrement())
+  services_clients_general         String                       @default("") @db.VarChar(120)
+  phone String
+  address String?
+  is_active                Int?                         @default(1)
+  created                  String?                      @db.VarChar(40)
+  modified                 String?                      @db.VarChar(40)
+  creator                  Int?
+  modifier                 Int?
+     @@unique([phone], name: "phone_")
+}
+
+
+model services_clients_general_address {
+  services_clients_general_id  Int?
+  services_clients_general_address_id      Int                          @id @default(autoincrement())
+  services_clients_general_address         String                       @default("") @db.VarChar(120)
+
+
+ 
+  zone_districts_id        String?                      @db.VarChar(10)
+  zone_divisions_id        String?                      @db.VarChar(10)
+  zone_upazilas_id         String?                      @db.VarChar(10)
+  zone_countries_id           Int?
+
+  is_active                Int?                         @default(1)
+  is_pickup                Int?                         @default(1)
+  is_destination           Int?                         @default(1)
+  created                  String?                      @db.VarChar(40)
+  modified                 String?                      @db.VarChar(40)
+  creator                  Int?
+  modifier                 Int?
+
+}
+
+
+
+model services_clients_branch {
+  services_clients_branch_id      Int                          @id @default(autoincrement())
+  services_clients_branch         String
+  services_clients_id             Int?                     
+  services_clients                String                       @default("") @db.VarChar(120)
+  responsible_persion  String?
+ 
+ wallet Int?
+
+  zone_countries_id        Int?
+  zone_districts_id        Int?                      
+  zone_divisions_id        Int?                     
+  zone_upazilas_id         Int?                     
+  address String  ?
+  userID Int?
+  is_active                Int?                         @default(1)
+  created                  String?                      @db.VarChar(40)
+  modified                 String?                      @db.VarChar(40)
+  creator                  Int?
+  modifier                 Int?
+  
+  marchant_id_  wallet_transaction[] @relation("marchant_id_") 
+
+}
+
+
+
+
+
+model services_clients_type {
+  services_clients_type_id Int     @id @default(autoincrement())
+  services_clients_type    String? @db.VarChar(255)
+  is_active                Int?    @default(1)
+  created                  String? @db.VarChar(40)
+  modified                 String? @db.VarChar(40)
+  creator                  Int?
+  modifier                 Int?
+}
+
+ 
+
+model services_provider {
+  services_provider_id Int     @id @default(autoincrement())
+  services_provider    String?   @db.VarChar(255)  
+  services_provider_code    String? @db.VarChar(255)
+  details              String? @db.LongText
+  position             Int?
+  is_active            Int?    @default(1)
+  created              String? @db.VarChar(40)
+  modified             String? @db.VarChar(40)
+  creator              Int?
+  modifier             Int?
+   @@unique([services_provider, services_provider_code], name: "services_provider_")
+}
+
+model settings {
+  id       Int     @id @default(autoincrement())
+  setting  String? @db.VarChar(1000)
+  value    String? @db.MediumText
+  image    String? @db.VarChar(250)
+  is_key   Int?    @default(1)
+  modified String? @db.VarChar(500)
+  creator  String? @db.VarChar(250)
+  modifier String? @db.VarChar(100)
+  created  String? @db.VarChar(1000)
+}
+
+model settings_tools {
+  settings_tools_id Int     @id @default(autoincrement())
+  settings_tools    String? @db.VarChar(250)
+  link              String? @db.VarChar(500)
+  details           String? @default("0") @db.VarChar(250)
+  modified          String? @db.VarChar(500)
+  creator           String? @db.VarChar(250)
+  modifier          String? @db.VarChar(100)
+  created           String? @db.VarChar(250)
+  logo              String? @db.VarChar(250)
+  is_active         Int     @default(1)
+  is_key            Int     @default(1)
+}
+
+model tbl_users {
+  userID        Int                    @id @default(autoincrement())
+  userName      String?                @unique(map: "user_name") @db.VarChar(255)
+  access_client String?                @db.VarChar(100)
+  branch_code   String?                @db.VarChar(20)
+  userPass      String?                @db.VarChar(200)
+  firstName     String?                @db.VarChar(255)
+  lastName      String?                @db.VarChar(50)
+  address       String?                @db.VarChar(255)
+  userEmail     String                @unique(map: "user_email") @db.VarChar(255)  
+  userPhone     String?                @db.VarChar(15)
+  mobile        String?                @db.VarChar(100)
+  userType      Int?
+  employee_id        String?
+  create_date   Int?
+  tbl_users_userStatus  String?                @db.VarChar(100)
+  userStatus   String? 
+  is_key        Int?                   @default(0)
+  tokenCode     String?                @db.VarChar(100)
+  image         String?                @default("default.png") @db.VarChar(250)
+  modified      String?                @db.VarChar(500)
+  creator       String?                @db.VarChar(250)
+  modifier      String?                @db.VarChar(100)
+  created       String?                @db.VarChar(250)
+  tender_books  String?                @db.VarChar(250)
+  
+  zone_districts_id    Int? 
+  files      String?                @db.VarChar(500)   
+  issue_user_  services_clients_issues_reply[] @relation("issue_user_") 
+  creator_  services_clients_issues[] @relation("issue_creator_") 
+  reply_by_  services_clients_issues[] @relation("issue_reply_by_")              
+
+  creator1_  pickup[] @relation("creator_user_") 
+ 
+  approved_by2_  wallet_transaction[] @relation("approved_by2")
+
+  creator_wallet_  wallet_transaction[] @relation("creator_wallet_")
+
+  delivery_boy_id_  pickup[] @relation("delivery_boy_user_") 
+
+  branch_id String?  
+  pickup_tracking pickup_tracking[]
+
+  delivery_boy_id_t  pickup_tracking[] @relation("delivery_boy_user_") 
+  commission_rate Int?
+}
+
+model tbl_users_groups {
+  groups_id Int     @id @default(autoincrement())
+  groups    String? @db.VarChar(250)
+  position  String? @db.VarChar(250)
+  is_key    String? @default("1") @db.VarChar(250)
+  created   String? @db.VarChar(250)
+  modified  String? @db.VarChar(500)
+  creator   String? @db.VarChar(250)
+  modifier  String? @db.VarChar(100)
+}
+
+model tbl_users_notification {
+  notification_id Int     @id @default(autoincrement())
+  userID          String? @db.VarChar(250)
+  forUser         String? @db.VarChar(250)
+  message         String? @db.VarChar(1000)
+  is_key          String? @default("1") @db.VarChar(250)
+  created         String? @db.VarChar(250)
+  modified        String? @db.VarChar(500)
+  creator         String? @db.VarChar(250)
+  modifier        String? @db.VarChar(100)
+}
+
+model tbl_users_permission {
+  tbl_users_permission_id Int     @id @default(autoincrement())
+  userType                String? @db.VarChar(250)
+  tables                  String? @db.VarChar(250)
+  alls                    String? @default("0") @db.VarChar(250)
+  updates                 String? @default("0") @db.VarChar(250)
+  inserts                 String? @default("0") @db.VarChar(250)
+  deletes                 String? @default("0") @db.VarChar(250)
+  view                    String? @db.VarChar(250)
+  created                 String? @db.VarChar(250)
+  modified                String? @db.VarChar(500)
+  creator                 String? @db.VarChar(250)
+  modifier                String? @db.VarChar(100)
+}
+
+model tbl_users_subgroups {
+  subgroups_id Int     @id @default(autoincrement())
+  subgroups    String? @db.VarChar(250)
+  position     String? @db.VarChar(250)
+  is_key       String? @default("1") @db.VarChar(250)
+  icon         String? @db.VarChar(2000)
+  created      String? @db.VarChar(250)
+  modified     String? @db.VarChar(500)
+  creator      String? @db.VarChar(250)
+  modifier     String? @db.VarChar(100)
+  groups       String? @db.VarChar(250)
+}
+
+model tbl_users_submenu {
+  submenu_id     Int     @id @default(autoincrement())
+  mainmenu       String? @db.VarChar(250)
+  submenu        String? @db.VarChar(2500)
+  tables         String? @db.VarChar(250)
+  is_key         String? @default("1") @db.VarChar(250)
+  is_operational Int?    @default(1)
+  created        String? @db.VarChar(250)
+  modified       String? @db.VarChar(500)
+  creator        String? @db.VarChar(250)
+  modifier       String? @db.VarChar(100)
+  groups_id      String? @db.VarChar(250)
+  subgroups      String? @db.VarChar(250)
+  function_name  String? @db.VarChar(250)
+  capital        String? @db.VarChar(250)
+  small          String? @db.VarChar(250)
+  position       Int?  
+  icon           String? @db.VarChar(1000)
+}
+
+ 
+
+model tbl_users_userType {
+  userType_id Int     @id @default(autoincrement())
+  userType    String? @db.VarChar(250)
+  permission  String? @db.VarChar(1000)
+  is_key      String? @default("1") @db.VarChar(250)
+
+ is_all_branch   String? @default("0") @db.VarChar(2)
+ is_quick_status   String? @default("0") @db.VarChar(2)
+ is_marchant   String? @default("0") @db.VarChar(2)
+ is_delivery_boy   String? @default("0") @db.VarChar(2)
+ is_scan_pod   String? @default("0") @db.VarChar(2)
+ is_pickup   String? @default("0") @db.VarChar(2)
+ is_update_status   String? @default("0") @db.VarChar(2)
+ 
+ 
+is_all_report   String? @default("0") @db.VarChar(2)
+is_all_report_ship   String? @default("0") @db.VarChar(2)
+is_all_report_data   String? @default("0") @db.VarChar(2)
+is_all_report_deli   String? @default("0") @db.VarChar(2)
+
+
+
+is_setup_conf   String? @default("0") @db.VarChar(2)
+
+ is_billing   String? @default("0") @db.VarChar(2)
+ is_issue   String? @default("0") @db.VarChar(2)
+
+is_dashboard_account   String? @default("0") @db.VarChar(2)
+is_dashboard_orders   String? @default("0") @db.VarChar(2)
+is_stock_branch   String? @default("0") @db.VarChar(2)
+is_update_status_payment   String? @default("0") @db.VarChar(2)
+is_update_status_update   String? @default("0") @db.VarChar(2)
+is_quick_status_all   String? @default("0") @db.VarChar(2)
+is_billing_app_col    String? @default("0") @db.VarChar(2)
+is_billing_dis   String? @default("0") @db.VarChar(2)
+is_billing_app_dis   String? @default("0") @db.VarChar(2)
+
+     
+  created     String? @db.VarChar(250)
+  modified    String? @db.VarChar(500)
+  creator     String? @db.VarChar(250)
+  modifier    String? @db.VarChar(100)
+}
+
+model tiny_template {
+  tiny_template_id Int     @id @default(autoincrement())
+  tiny_template    String? @db.VarChar(250)
+  description      String? @db.VarChar(500)
+  content          String? @db.LongText
+  position         String? @db.VarChar(250)
+  is_key           String? @default("1") @db.VarChar(250)
+  created_by       String? @db.VarChar(250)
+  approved_by      String? @db.VarChar(250)
+  created          String? @db.VarChar(250)
+  modified         String? @db.VarChar(500)
+  creator          String? @db.VarChar(250)
+  modifier         String? @db.VarChar(100)
+}
+
+model zone_districts {
+  zone_districts_id Int      @id @default(autoincrement()) @db.UnsignedInt
+  zone_divisions_id Int      @db.UnsignedInt
+  zone_districts    String   @db.VarChar(30)
+  zone_districts_short    String?    
+  zone_districts_bn String?  @db.VarChar(50) 
+  lat               Float?
+  lon               Float?
+  website           String?  @db.VarChar(100)
+  created_at        DateTime @default(now()) @db.Timestamp(0)
+  updated_at        DateTime @default(now()) @db.Timestamp(0)
+  position          Int?
+  is_active         Int?     @default(1)
+  created           String?  @db.VarChar(40)
+  modified          String?  @db.VarChar(40)
+  creator           Int?
+  modifier          Int?
+}
+
+model zone_divisions {
+  zone_divisions_id Int      @id @default(autoincrement()) @db.UnsignedInt
+  zone_divisions    String   @db.VarChar(30)
+  zone_divisions_bn String   @db.VarChar(50)
+  zone_countries_id        Int?
+  created_at        DateTime @default(now()) @db.Timestamp(0)
+  updated_at        DateTime @default(now()) @db.Timestamp(0)
+  position          Int?
+  is_active         Int?     @default(1)
+  created           String?  @db.VarChar(40)
+  modified          String?  @db.VarChar(40)
+  creator           Int?
+  modifier          Int?
+}
+
+model zone_upazilas {
+  zone_upazilas_id  Int      @id @default(autoincrement()) @db.UnsignedInt
+  zone_districts_id Int      @db.UnsignedInt
+  zone_upazilas     String   @db.VarChar(30)
+  zone_upazilas_bn  String?  @db.VarChar(50)
+  created_at        DateTime @default(now()) @db.Timestamp(0)
+  updated_at        DateTime @default(now()) @db.Timestamp(0)
+  position          Int?
+  is_active         Int?     @default(1)
+  created           String?  @db.VarChar(40)
+  modified          String?  @db.VarChar(40)
+  creator           Int?
+  modifier          Int?
+}
+
+model services_clients_issues {
+  id         Int     @id @default(autoincrement())
+  subject       String? 
+  issue  String? @db.MediumText()
+  reply  String? @db.MediumText()
+
+is_delete Int?    @default(0)
+  is_seen                  Int?    @default(0)
+  is_solved                  Int?    @default(0)
+
+  client_id                  Int? 
+  client_   services_clients?  @relation ("issue_client_", fields:[client_id], references:[services_clients_id]) 
+
+  creator                      Int?
+  creator_   tbl_users?  @relation ("issue_creator_", fields:[creator], references:[userID]) 
+
+  reply_by                      Int?
+  reply_by_   tbl_users?  @relation ("issue_reply_by_", fields:[reply_by], references:[userID]) 
+
+  created                      String? @db.VarChar(40)
+  replied                      String? @db.VarChar(40)
+}
+ 
+
+
+model services_clients_issues_reply {
+  id         Int     @id @default(autoincrement())
+  user_id         Int
+    user_   tbl_users?  @relation ("issue_user_", fields:[user_id], references:[userID]) 
+  issue_user_id         Int
+  reply  String?
+ 
+  issue_id         Int?
+  is_seen                    Int?    @default(0)
+  is_active                    Int?    @default(1)
+  created                      String? @db.VarChar(40)
+  modified                     String? @db.VarChar(40)
+  creator                      Int?
+  modifier                     Int?
+}
+
+
+
+
+
+enum i_document_type_sms_send {
+  Yes
+  No
+}
+
+enum i_gateway_status {
+  Yes
+  No
+}
+
+enum i_sms_template_published {
+  Yes
+  No
+}
+
+ 
+
+enum branch_published {
+  Yes
+  No
+}
+
+enum services_clients_published {
+  Yes
+  No
+}
+
+enum services_clients_sms_option {
+  Yes
+  No
+}
+
+enum services_clients_api_enable {
+  Yes
+  No
+}
+
+enum pod_status {
+  Picked_up       @map("Picked up")
+  In_Transit      @map("In Transit")
+  Delivered
+  On_Hold         @map("On Hold")
+  Landed
+  Delayed
+  Transfer_Branch @map("Transfer Branch")
+  CN_Book         @map("CN-Book")
+  Return
+  Not_Received    @map("Not Received")
+}
+
+enum pod_pod_type {
+  General
+  Corporate
+  International
+}
+
+enum pod_payment_type {
+  Prepaid
+  COD
+  To_Pay  @map("To Pay")
+  Cash
+  Credit
+}
+
+enum pod_priority {
+  General
+  Security
+}
+
+enum pod_track_status {
+  Yes
+  No
+} 

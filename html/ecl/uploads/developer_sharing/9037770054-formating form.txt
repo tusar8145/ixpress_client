@@ -1,0 +1,25 @@
+			 var f_title='Select Task@@t= #Files@@t#Starting Date@r@t=#Closing Date@@t=#Works Done@@t=#Additional Works@@t=#Test Cases@@t=#Works Listout@@t=#Letter for Approval@@t=#Status@r@t=';
+			 var f_type='select@newTable~select pro_solution.pro_solution as pro_solution, pro_solution.pro_solution_id as pro_solution_id from pro_solution,pro_execute where pro_execute.pro_solution != pro_solution.pro_solution_id  AND  (pro_solution.request_to Like ?%"+this_user_id_value+"%? OR pro_solution.request_to  Like  ?"+this_user_id_value+"%? OR   pro_solution.request_to Like ?%"+this_user_id_value+"?)    order by  pro_solution.pro_solution_id ASC#file@multi@../../ecl/uploads/pro_execute/#input#input#area@tiny#area@tiny#area@tiny#area@tiny#area@tiny#select@newTable~select * from pro_execute_status where  1   order by pro_execute_status_id ASC';
+		 var f_column='pro_solution#files#starting_date#completed_date#works_done#additional_works#test_cases#works_listout#letter#pro_execute_status';
+		 var f_classes='##datetimepicker#datetimepicker#tinymce#tinymce#tinymce#tinymce#tinymce#tinymce#';
+				
+					+'Schedule On@@t➤input➤schedule_on➤time➤'   
+		
+		var a1 = f_title.split('#');
+		var a2 = f_type.split('#');
+		var a3 = f_column.split('#');
+		var a4 = f_classes.split('#');
+		
+		var aa='';
+		
+		for(var j = 0; j < a1.length; j++) {
+		   
+   if(j == 0){
+		         aa=aa +a1[j]+'➤'+a2[j]+'➤'+a3[j]+'➤'+a4[j]+'➤'+'\'\n+\''; 
+				 }
+		    else{
+		        aa=aa +a1[j]+'➤'+a2[j]+'➤'+a3[j]+'➤'+a4[j]+'➤'+'\'\n+\'';	 
+		    }
+		    	   
+		}
+  console.log('var form=\''+aa.slice(0, -2)+';'); 

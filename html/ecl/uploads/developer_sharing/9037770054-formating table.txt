@@ -1,0 +1,24 @@
+		
+		
+		
+				var th='SL,Task,Starting Date,Closing Date,Created,Modify,Action#text-end@fs--1';
+				var td='pro_execute+pro_problem#{pro_problem_id}[pro_problem]&select * from pro_problem where pro_problem_id**+pro_execute_status#{pro_execute_status_id}[pro_execute_status]&select * from pro_execute_status where pro_execute_status_id**@[fs--0*,starting_date,completed_date,created#@[fs--1*,modified#@[fs--1*,_delete_able+_edit_able@[text-end';
+				
+		
+		var a1 = th.split(',');
+		var a2 = td.split(',');
+	 
+		var aa='';
+		
+		for(var j = 0; j < a1.length; j++) {
+		   if(j == 0){
+		       aa=aa +a1[j]+'➤➤'+'\'\n+\'';	 
+		   }else{
+		       aa=aa +a1[j]+'➤'+a2[j-1]+'➤'+'\'\n+\'';	 
+		   }
+ 
+		         
+ 
+		    	   
+		}
+  console.log('var table=\''+aa.slice(0, -5)+'\';'); 

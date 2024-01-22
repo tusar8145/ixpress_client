@@ -1,0 +1,6 @@
+[17-Jun-2021 18:20:15 America/Boise] PHP Warning:  include(../../header.php): failed to open stream: No such file or directory in /home3/matsolut/public_html/dev/admin2/view/contact.php on line 5
+[17-Jun-2021 18:20:15 America/Boise] PHP Warning:  include(../../header.php): failed to open stream: No such file or directory in /home3/matsolut/public_html/dev/admin2/view/contact.php on line 5
+[17-Jun-2021 18:20:15 America/Boise] PHP Warning:  include(): Failed opening '../../header.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/matsolut/public_html/dev/admin2/view/contact.php on line 5
+[17-Jun-2021 18:20:15 America/Boise] PHP Warning:  include(../../footer.php): failed to open stream: No such file or directory in /home3/matsolut/public_html/dev/admin2/view/contact.php on line 25
+[17-Jun-2021 18:20:15 America/Boise] PHP Warning:  include(../../footer.php): failed to open stream: No such file or directory in /home3/matsolut/public_html/dev/admin2/view/contact.php on line 25
+[17-Jun-2021 18:20:15 America/Boise] PHP Warning:  include(): Failed opening '../../footer.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/matsolut/public_html/dev/admin2/view/contact.php on line 25

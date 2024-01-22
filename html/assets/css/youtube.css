@@ -1,0 +1,219 @@
+/* Settings - feel free to play with these */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+/**
+ * This part should be set separately for each video
+ * if there are multiple videos in your site.
+ * I.e. '.demo-video-wrapper' is the name of this particular video
+ */
+ 
+
+ 
+.video-hero--content {
+  position: relative;
+  text-align: center;
+  color: #FFF;
+  margin: 150px 0;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.video-hero--content h2 {
+  font-size: 34px;
+  margin: 0 0 10px;
+}
+
+.video-hero--content p {
+  font-size: 20px;
+  margin: 0;
+}
+
+ 
+ 
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+
+.page-width {
+  width: 92%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+ 
+
+ 
+ 
+
+#content {
+  padding: 40px 0;
+}
+
+/* CSS from jQuery Background Video plugin */
+/**
+ * Set default positioning as a fallback for if the plugin fails
+ */
+ 
+
+.jquery-background-video {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  -o-object-fit: contain;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+}
+
+/**
+ * Fade in videos
+ * Note the .js class - so non js users still
+ * see the video
+ */
+ 
+.js .jquery-background-video.is-visible {
+  opacity: 1;
+}
+
+/**
+ * Pause/play button
+ */
+.jquery-background-video-pauseplay {
+  position: absolute;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+  cursor: pointer;
+  outline: none !important;
+}
+
+.jquery-background-video-pauseplay span {
+  display: none;
+}
+
+.jquery-background-video-pauseplay:after,
+.jquery-background-video-pauseplay:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.3s ease;
+}
+
+.jquery-background-video-pauseplay.play:before {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #FFF;
+}
+
+.jquery-background-video-pauseplay.pause:before,
+.jquery-background-video-pauseplay.pause:after {
+  border-top: 10px solid #FFF;
+  border-bottom: 10px solid #FFF;
+  border-left: 5px solid #FFF;
+}
+
+.jquery-background-video-pauseplay.pause:after {
+  left: 10px;
+}
+
+
+
+.coverx {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  position: absolute;
+  margin: auto;
+  top: 10%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 50%;
+  text-align: center;
+}
+.coverx h2 {
+  font-size: 36px;
+  font-weight: 100;
+  color: #fff;
+  line-height: 1.3em;
+  margin-bottom: 2rem;
+}
+.coverx p {
+  font-size: 18px;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.6em;
+  margin-bottom: 1em;
+}
+.coverx a {
+  color: #cadecb;
+}
+
+/* This is the SCSS you'll need */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  margin: rem-calc(0 0 54.5);
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.video-overlay {
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+  position: absolute;
+  z-index: 2;
+}
+
+.video-expand {
+  color: white;
+  font-size: 1.125rem;
+  line-height: 1em;
+  opacity: 0.4;
+  position: absolute;
+  top: 0.9375rem;
+  right: 0.9375rem;
+  z-index: 3;
+}
+.video-expand:hover {
+  -webkit-transition: all 400ms ease-in-out;
+  -moz-transition: all 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
+}
+
+.tv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.tv .screen {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  margin: auto;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.tv .screen.active {
+  opacity: 1;
+}

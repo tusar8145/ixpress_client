@@ -1,0 +1,3 @@
+206.189.159.184/phpmyadmin
+iexpress_db
+AVNS_LN5Y4r1PV0uLh8F1TCZ

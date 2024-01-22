@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `branch` MODIFY `cl` VARCHAR(191) NULL,
+    MODIFY `sl` VARCHAR(191) NULL,
+    MODIFY `is_office` INTEGER NULL DEFAULT 1;
